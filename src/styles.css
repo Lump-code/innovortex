@@ -1,0 +1,446 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * Keep every @import in this top block. Web fonts load via <link> in src/routes/__root.tsx.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * TechNeeds design system — an editorial, monochrome language:
+ * pure black canvas, white small caps type, oversized grey display type,
+ * hairline rules, animated underlines and a blend-mode dot cursor.
+ */
+
+@theme inline {
+  --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-display: var(--display);
+  --color-display-dim: var(--display-dim);
+  --color-hairline: var(--hairline);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+
+  --ease-editorial: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --radius: 999px;
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.17 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.72 0 0);
+  --accent: oklch(0.2 0 0);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.62 0.2 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.35 0 0);
+  --input: oklch(0.35 0 0);
+  --ring: oklch(0.72 0 0);
+
+  /* Editorial tokens */
+  --display: oklch(0.72 0 0); /* oversized grey type */
+  --display-dim: oklch(0.3 0 0); /* row text when another is focused */
+  --hairline: oklch(0.4 0 0); /* 1px separators */
+  --surface: oklch(0.17 0 0); /* rgb(20,20,20) */
+  --surface-raised: oklch(0.22 0 0);
+  --inverse: oklch(1 0 0);
+  --inverse-foreground: oklch(0 0 0);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--inverse);
+    color: var(--inverse-foreground);
+  }
+
+  /* The dot cursor replaces the system pointer only on fine pointers. */
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea {
+    cursor: text !important;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--foreground);
+    outline-offset: 4px;
+  }
+}
+
+/* ---------- Typography ---------- */
+
+@utility label-caps {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+@utility label-eyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility display-hero {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--display);
+  font-size: clamp(3.4rem, 12.4vw, 13.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--display);
+  font-size: clamp(2.6rem, 7.4vw, 7.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--display);
+  font-size: clamp(2.1rem, 6.6vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.2vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+@utility body-lead {
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+}
+
+@utility page-gutter {
+  padding-left: clamp(1.25rem, 2.8vw, 2.5rem);
+  padding-right: clamp(1.25rem, 2.8vw, 2.5rem);
+}
+
+/* ---------- Text link: underline + rotating arrow ---------- */
+
+@utility link-underline {
+  position: relative;
+  display: inline-block;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.6s var(--ease-editorial);
+  }
+  &:hover::after,
+  &:focus-visible::after,
+  &[data-active="true"]::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* Group variant: underline the label when the whole link is hovered. */
+@utility link-arrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.4;
+  & .link-arrow-label {
+    position: relative;
+  }
+  & .link-arrow-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: calc(-1.1rem - 0.9em);
+    bottom: -6px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.6s var(--ease-editorial);
+  }
+  & .link-arrow-icon {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    transform: rotate(-45deg);
+    transition: transform 0.6s var(--ease-editorial);
+  }
+  &:hover .link-arrow-label::after,
+  &:focus-visible .link-arrow-label::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  &:hover .link-arrow-icon,
+  &:focus-visible .link-arrow-icon {
+    transform: rotate(0deg);
+  }
+}
+
+/* Outlined pill — the reference's "View all work" / "Let's talk" treatment. */
+@utility pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--foreground);
+  border-radius: 999px;
+  padding: 0.3rem 1.25rem;
+  font-weight: 400;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.5s var(--ease-editorial);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--inverse);
+    transform: translateY(101%);
+    border-radius: 999px;
+    transition: transform 0.5s var(--ease-editorial);
+    z-index: -1;
+  }
+  &:hover {
+    color: var(--inverse-foreground);
+  }
+  &:hover::before {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes clip-reveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes curtain {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+/* Line that emerges from below its own baseline. */
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+  margin-bottom: -0.04em;
+}
+
+@utility line-rise {
+  display: block;
+  transform: translateY(105%);
+  animation: rise 1.25s var(--ease-out-expo) forwards;
+}
+
+@utility animate-page-in {
+  animation: page-in 0.9s var(--ease-out-expo) backwards;
+}
+
+@utility animate-curtain {
+  animation: curtain 0.9s var(--ease-editorial) 0.05s forwards;
+}
+
+@utility animate-marquee {
+  animation: marquee 70s linear infinite;
+}
+
+@utility animate-clip-reveal {
+  animation: clip-reveal 1s var(--ease-out-expo) both;
+}
+
+@utility animate-spin-slow {
+  animation: spin-slow 9s linear infinite;
+}
+
+@utility animate-breathe {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+/* Scroll reveal — toggled by the Reveal component. */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 1s var(--ease-out-expo),
+    transform 1.2s var(--ease-out-expo);
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+@keyframes podium-rise {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
